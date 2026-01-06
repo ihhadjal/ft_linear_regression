@@ -1,15 +1,22 @@
+import numpy as np
+
 teta_0 = 0
 teta_1 = 0
+
+ecart = 0
+average = 0
 
 def estimate_price(mileage):
     return  teta_0 + (teta_1 * mileage)
 
 def normalize(inp):
-    lst = []
-    for i in inp:
-        i = (i - min(inp)) / (max(inp) - (min(inp)))
-        lst.append(i)
-    return lst
+    global ecart, average
+
+    inp = np.array(inp)
+    ecart = np.std(inp)
+    average = np.mean(inp)
+
+    return (inp - average) / ecart
 
 def train():
     global teta_0, teta_1
@@ -27,7 +34,7 @@ def train():
     km = normalize(km)
     price = normalize(price)
 
-    for _ in range(30):
+    for _ in range(5000):
         teta_0_temp = 0.01 * (1/lenght) * sum(
             (estimate_price(km[i]) - price[i])
             for i in range(lenght)
@@ -43,6 +50,10 @@ def train():
         file.write(str(teta_0))
         file.write('\n')
         file.write(str(teta_1))
+        file.write('\n')
+        file.write(str(ecart))
+        file.write('\n')
+        file.write(str(average))
     
 def main():
     train()
