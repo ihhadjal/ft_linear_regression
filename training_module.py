@@ -18,18 +18,18 @@ def train():
             price.append(float(parts[1]))
 
     lenght = len(km)
-    for _ in range(5):
+    for _ in range(30):
         teta_0_temp = 0.1 * (1/lenght) * sum(
-            estimate_price(km[i] - price[i])
+            (estimate_price(km[i]) - price[i])
             for i in range(lenght)
         )
         teta_1_temp = 0.1 * (1/lenght) * sum(
-            estimate_price((km[i]) - price[i]) * km[i]
+            (estimate_price(km[i]) - price[i]) * km[i]
             for i in range(lenght)
         )
-    teta_0 = teta_0 - teta_0_temp
-    teta_1 = teta_1 - teta_1_temp
-
+        teta_0 = teta_0 - teta_0_temp
+        teta_1 = teta_1 - teta_1_temp
+    
     with open('train.txt', 'w') as file:
         file.write(str(teta_0))
         file.write('\n')
