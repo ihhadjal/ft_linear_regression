@@ -4,6 +4,12 @@ teta_1 = 0
 def estimate_price(mileage):
     return  teta_0 + (teta_1 * mileage)
 
+def normalize(inp):
+    lst = []
+    for i in inp:
+        i = (i - min(inp)) / (max(inp) - (min(inp)))
+        lst.append(i)
+    return lst
 
 def train():
     global teta_0, teta_1
@@ -16,8 +22,11 @@ def train():
             parts = line.strip().split(',')
             km.append(float(parts[0]))
             price.append(float(parts[1]))
-
     lenght = len(km)
+
+    km = normalize(km)
+    price = normalize(price)
+
     for _ in range(30):
         teta_0_temp = 0.01 * (1/lenght) * sum(
             (estimate_price(km[i]) - price[i])
