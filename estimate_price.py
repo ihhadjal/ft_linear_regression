@@ -11,7 +11,7 @@ def code():
     while(1):
         try:
             mileage = float(input("insert a mileage: "))
-            estimate = float(estimate_price(mileage))
+            estimate = estimate_price(mileage)
             print("The estimated price is:", estimate)
             break
         except ValueError:
