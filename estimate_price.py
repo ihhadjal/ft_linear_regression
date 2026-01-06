@@ -7,14 +7,16 @@ def estimate_price(mileage):
 
     teta_0 = float(lst[0])
     teta_1 = float(lst[1])
-    ecart = float(lst[2])
-    average = float(lst[3])
+    km_ecart = float(lst[2])
+    km_average = float(lst[3])
+    price_ecart = float(lst[4])
+    price_average = float(lst[5])
 
-    normalized_mileaged = (mileage - average) / ecart
+    normalized_mileage = (mileage - km_average) / km_ecart
 
-    normalized_price_est = teta_0 + (teta_1 * normalized_mileaged)
-
-    real_price = (normalized_price_est * ecart) + average
+    normalized_price = teta_0 + (teta_1 * normalized_mileage)
+    
+    real_price = (normalized_price * price_ecart) + price_average
 
     return real_price
 

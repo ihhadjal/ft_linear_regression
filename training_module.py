@@ -31,29 +31,33 @@ def train():
             price.append(float(parts[1]))
     lenght = len(km)
 
-    km = normalize(km)
-    price = normalize(price)
+    km_normalized= normalize(km)
+    km_ecart = ecart
+    km_average = average
 
-    for _ in range(5000):
-        teta_0_temp = 0.01 * (1/lenght) * sum(
-            (estimate_price(km[i]) - price[i])
+    price_normalized = normalize(price)
+    price_ecart = ecart
+    price_average = average
+
+    for _ in range(10000):
+        teta_0_temp = 0.1 * (1/lenght) * sum(
+            (estimate_price(km_normalized[i]) - price_normalized[i])
             for i in range(lenght)
         )
-        teta_1_temp = 0.01 * (1/lenght) * sum(
-            (estimate_price(km[i]) - price[i]) * km[i]
+        teta_1_temp = 0.1 * (1/lenght) * sum(
+            (estimate_price(km_normalized[i]) - price_normalized[i]) * km_normalized[i]
             for i in range(lenght)
         )
-    teta_0 = teta_0 - teta_0_temp
-    teta_1 = teta_1 - teta_1_temp
+        teta_0 = teta_0 - teta_0_temp
+        teta_1 = teta_1 - teta_1_temp
     
     with open('train.txt', 'w') as file:
-        file.write(str(teta_0))
-        file.write('\n')
-        file.write(str(teta_1))
-        file.write('\n')
-        file.write(str(ecart))
-        file.write('\n')
-        file.write(str(average))
+        file.write(str(teta_0) + '\n')
+        file.write(str(teta_1) + '\n')
+        file.write(str(km_ecart) + '\n')      
+        file.write(str(km_average) + '\n')    
+        file.write(str(price_ecart) + '\n')   
+        file.write(str(price_average))
     
 def main():
     train()
