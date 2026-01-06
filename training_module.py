@@ -2,10 +2,12 @@ teta_0 = 0
 teta_1 = 0
 
 def estimate_price(mileage):
-    return teta_0 + (teta_1 * mileage)
+    return  teta_0 + (teta_1 * mileage)
 
-def training_module():
+
+def train():
     global teta_0, teta_1
+
     km = []
     price = []
     with open('data.csv', 'r') as file:
@@ -14,18 +16,27 @@ def training_module():
             parts = line.strip().split(',')
             km.append(float(parts[0]))
             price.append(float(parts[1]))
-    size = len(km)
-    for _ in range(1000):
-        error_teta0 = 0.001 * (1/size) * sum(
-            estimate_price(km[i]) - price[i]
-            for i in range(size)
+
+    lenght = len(km)
+    for _ in range(5):
+        teta_0_temp = 0.1 * (1/lenght) * sum(
+            estimate_price(km[i] - price[i])
+            for i in range(lenght)
         )
-        error_teta1 = 0.001 * (1/size) * sum(
+        teta_1_temp = 0.1 * (1/lenght) * sum(
             estimate_price((km[i]) - price[i]) * km[i]
-            for i in range(size)
+            for i in range(lenght)
         )
-        teta_0 = teta_0-error_teta0
-        teta_1 = teta_1-error_teta1
-    print(teta_0)
-    print(teta_1)
-    return (teta_0, teta_1)
+    teta_0 = teta_0 - teta_0_temp
+    teta_1 = teta_1 - teta_1_temp
+
+    with open('train.txt', 'w') as file:
+        file.write(str(teta_0))
+        file.write('\n')
+        file.write(str(teta_1))
+    
+def main():
+    train()
+
+if __name__ == '__main__':
+    main()
