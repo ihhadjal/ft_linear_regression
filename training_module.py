@@ -1,4 +1,5 @@
 import numpy as np
+import pandas
 
 teta_0 = 0
 teta_1 = 0
@@ -23,6 +24,13 @@ def train():
 
     km = []
     price = []
+    try:
+        df = pandas.read_csv("data.csv")
+        df["km"] = pandas.to_numeric(df["km"], errors="raise")
+        df["price"] = pandas.to_numeric(df["price"], errors="raise")
+    except (ValueError, pandas.errors.EmptyDataError):
+        print("the value inserted in the dataset is not valid / it's empty")
+        exit(1)
     with open('data.csv', 'r') as file:
         next(file)
         for line in file:

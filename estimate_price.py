@@ -1,4 +1,3 @@
-import training_module as train
 import numpy as np
 
 def estimate_price(mileage):
