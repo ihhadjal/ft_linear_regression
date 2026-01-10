@@ -2,10 +2,6 @@ import numpy as np
 import pandas as pn
 import matplotlib.pyplot as plt
 
-def plotter(km, prices, teta_0, teta_1, mileage):
-    plt.plot(prices, km)
-    plt.show()
-
 def estimate_price(mileage):
     with open('train.txt') as file:
         lst = file.readlines()
@@ -31,7 +27,6 @@ def estimate_price(mileage):
     normalized_price = teta_0 + (teta_1 * normalized_mileage)
     
     real_price = (normalized_price * price_ecart) + price_average
-    plotter(km, prices, teta_0, teta_1, normalized_mileage)
 
     return real_price
 

@@ -58,6 +58,21 @@ def train():
         )
         teta_0 = teta_0 - teta_0_temp
         teta_1 = teta_1 - teta_1_temp
+    
+    predicted_prices = []
+
+    for i in range(lenght):
+        price_normalized_predicted = estimate_price(km_normalized[i])
+        real_price = (price_normalized_predicted * price_ecart) + price_average
+        predicted_prices.append(real_price)
+
+    plt.scatter(km, price, color='blue', label='Données réelles')
+    plt.plot(km, predicted_prices, color='red', label="régression linéaire")
+    plt.xlabel('kilometrage')
+    plt.ylabel('prix')
+    plt.legend()
+    plt.show()
+
     with open('train.txt', 'w') as file:
         file.write(str(teta_0) + '\n')
         file.write(str(teta_1) + '\n')
