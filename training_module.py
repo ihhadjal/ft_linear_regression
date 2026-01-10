@@ -70,6 +70,7 @@ def train():
     plt.plot(km, predicted_prices, color='red', label="régression linéaire")
     plt.xlabel('kilometrage')
     plt.ylabel('prix')
+    plt.title("prix en foction du kilometrage + regression linéaire")
     plt.legend()
     plt.show()
 
