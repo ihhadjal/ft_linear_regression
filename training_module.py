@@ -1,5 +1,6 @@
 import numpy as np
 import pandas
+import matplotlib.pyplot as plt
 
 teta_0 = 0
 teta_1 = 0
@@ -38,7 +39,6 @@ def train():
             km.append(float(parts[0]))
             price.append(float(parts[1]))
     lenght = len(km)
-
     km_normalized= normalize(km)
     km_ecart = ecart
     km_average = average
@@ -58,7 +58,6 @@ def train():
         )
         teta_0 = teta_0 - teta_0_temp
         teta_1 = teta_1 - teta_1_temp
-    
     with open('train.txt', 'w') as file:
         file.write(str(teta_0) + '\n')
         file.write(str(teta_1) + '\n')

@@ -1,4 +1,10 @@
 import numpy as np
+import pandas as pn
+import matplotlib.pyplot as plt
+
+def plotter(km, prices, teta_0, teta_1, mileage):
+    plt.plot(prices, km)
+    plt.show()
 
 def estimate_price(mileage):
     with open('train.txt') as file:
@@ -11,11 +17,21 @@ def estimate_price(mileage):
     price_ecart = float(lst[4])
     price_average = float(lst[5])
 
+    try:
+        df = pn.read_csv("data.csv")
+        km = df["km"]
+        prices = df["price"]
+        
+    except (ValueError, pn.errors.EmptyDataError):
+        print("data set is wrong / empty")
+        return 1
+
     normalized_mileage = (mileage - km_average) / km_ecart
 
     normalized_price = teta_0 + (teta_1 * normalized_mileage)
     
     real_price = (normalized_price * price_ecart) + price_average
+    plotter(km, prices, teta_0, teta_1, normalized_mileage)
 
     return real_price
 
